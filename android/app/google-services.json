@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "57794076866",
+    "project_id": "schoolsys-49eac",
+    "storage_bucket": "schoolsys-49eac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57794076866:android:f089599110b36b9a33db5b",
+        "android_client_info": {
+          "package_name": "com.example.schoolsys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57794076866-ebv8idtaod6a0g697u9nrtrbv3bqu6e8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.schoolsys",
+            "certificate_hash": "460f88e05018d359023dedae1a5a6dcc6b2c8547"
+          }
+        },
+        {
+          "client_id": "57794076866-j2civrkb225mik02edpa36s4hs14ci7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6ljmDLHxhERHT15wMDowouHU49dJJqfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57794076866-j2civrkb225mik02edpa36s4hs14ci7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
