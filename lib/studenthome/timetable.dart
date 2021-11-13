@@ -9,7 +9,29 @@ class Timetable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: const Center(child: Text('welcome')),
+      body: Center(
+        child: SingleChildScrollView(
+            child: InkWell(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Timetable(
+                  title: '',
+                ),
+              )),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'assets/FY-MCA_page.jpg',
+                  height: 700,
+                  width: 700,
+                ),
+                const Text('Time Table Fy- MCA',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ]),
+        )),
+      ),
       drawer: Drawer(
         child: ListView(children: <Widget>[
           DrawerHeader(
@@ -18,32 +40,30 @@ class Timetable extends StatelessWidget {
                   image: AssetImage('assets/bgimage.jpg'), fit: BoxFit.cover),
             ),
             // ignore: avoid_unnecessary_containers
-            child: Container(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Material(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(70.0)),
-                      elevation: 10,
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Image.asset(
-                          'assets/user.png',
-                          width: 80,
-                          height: 80,
-                        ),
+
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Material(
+                    borderRadius: const BorderRadius.all(Radius.circular(70.0)),
+                    elevation: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Image.asset(
+                        'assets/user.png',
+                        width: 80,
+                        height: 80,
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: Text(
-                        'Username',
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'Username',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
-                  ]),
-            ),
+                  ),
+                ]),
           ),
           ListTile(
             leading: const Icon(Icons.verified_user),

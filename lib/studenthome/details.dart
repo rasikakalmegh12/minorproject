@@ -8,11 +8,11 @@ class StdDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
       // ignore: avoid_unnecessary_containers
       body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: SingleChildScrollView(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -22,22 +22,181 @@ class StdDetails extends StatelessWidget {
                   elevation: 10,
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Image.asset('assets/user1.png',
-                        width: 100, height: 100),
+                    child:
+                        Image.asset('assets/user.png', width: 100, height: 100),
                   ),
                 ),
-                TextField(
+                const SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
                   style: const TextStyle(color: Colors.blue),
                   decoration: InputDecoration(
-                    labelText: 'Personal Details',
+                    labelText: 'Full Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Roll Number',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    )),
+                    const SizedBox(
+                      width: 17,
+                    ),
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Class',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ))
+                  ],
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                  style: const TextStyle(color: Colors.blue),
+                  decoration: InputDecoration(
+                    labelText: 'Address',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Mobile Number',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    )),
+                    const SizedBox(
+                      width: 17,
+                    ),
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Gender',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ))
+                  ],
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                  style: const TextStyle(color: Colors.blue),
+                  decoration: InputDecoration(
+                    labelText: 'Date Of Birth',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                  style: const TextStyle(color: Colors.blue),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Religion',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    )),
+                    const SizedBox(
+                      width: 17,
+                    ),
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Category',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ))
+                  ],
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Caste',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    )),
+                    const SizedBox(
+                      width: 17,
+                    ),
+                    Expanded(
+                        child: TextFormField(
+                      style: const TextStyle(color: Colors.blue),
+                      decoration: InputDecoration(
+                        labelText: 'Nationality',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ))
+                  ],
+                ),
               ]),
         ),
-      ),
+      )),
       drawer: Drawer(
         child: ListView(children: <Widget>[
           DrawerHeader(
