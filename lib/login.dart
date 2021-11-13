@@ -1,10 +1,5 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:schoolsys/parenthome/prthome.dart';
 import 'package:schoolsys/registration/rgstr.dart';
-// ignore: unused_import
 import 'package:schoolsys/studenthome/stdhome.dart';
 
 class Login extends StatefulWidget {
@@ -25,6 +20,7 @@ class _Login extends State<Login> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
+          // ignore: avoid_unnecessary_containers
           child: Container(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -96,8 +92,9 @@ class _Login extends State<Login> {
                         if (value!.isEmpty) {
                           return ("Password Is Required For Login!");
                         }
+
                         if (!regex.hasMatch(value)) {
-                          return ("Enter Valid Password");
+                          return ("Password must have at least one uppercase,one\nlowercase & one digit.Password must be 6 to 20\ncharacter.");
                         }
                       },
                       onSaved: (value) {

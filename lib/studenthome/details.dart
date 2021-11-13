@@ -74,18 +74,13 @@ class StdDetails extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
             leading: const Icon(Icons.verified_user),
             title: const Text('Edit Profile'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('Teachers Details'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
             onTap: () => {Navigator.of(context).pop()},
           ),
           ListTile(

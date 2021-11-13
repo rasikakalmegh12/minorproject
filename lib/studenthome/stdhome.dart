@@ -6,7 +6,9 @@ import 'package:schoolsys/studenthome/events.dart';
 import 'package:schoolsys/studenthome/exam.dart';
 import 'package:schoolsys/studenthome/homework.dart';
 import 'package:schoolsys/studenthome/marksheet.dart';
+import 'package:schoolsys/studenthome/profile.dart';
 import 'package:schoolsys/studenthome/timetable.dart';
+import 'package:share_plus/share_plus.dart';
 
 class StdHome extends StatelessWidget {
   const StdHome({Key? key, required this.title}) : super(key: key);
@@ -211,32 +213,32 @@ class StdHome extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.verified_user),
-            title: const Text('Edit Profile'),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
             onTap: () => {Navigator.of(context).pop()},
           ),
           ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('Teachers Details'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
+              leading: const Icon(Icons.verified_user),
+              title: const Text('Edit Profile'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()));
+              }),
           ListTile(
             leading: const Icon(Icons.border_color),
             title: const Text('About App'),
             onTap: () => {Navigator.of(context).pop()},
           ),
           ListTile(
-              leading: const Icon(Icons.share),
-              title: const Text('Share App'),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Login()));
-              }),
+            leading: const Icon(Icons.share),
+            title: const Text('Share App'),
+            onTap: () {
+              Share.share(
+                  'hey! check out this new app https://play.google.com/store/search?q=pub%3ADivTag&c=apps');
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
