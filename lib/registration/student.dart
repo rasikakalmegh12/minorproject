@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:schoolsys/login.dart';
 import 'package:schoolsys/registration/student1.dart';
+import 'package:intl/intl.dart';
 
 class Student extends StatelessWidget {
   const Student({Key? key}) : super(key: key);
@@ -43,9 +44,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   final TextEditingController stdClass = TextEditingController();
   final TextEditingController stdEmail = TextEditingController();
   final TextEditingController stdPhone = TextEditingController();
-  final TextEditingController stdDOB = TextEditingController();
   final TextEditingController stdGender = TextEditingController();
   final TextEditingController stdAddress = TextEditingController();
+  final TextEditingController intialdateval = TextEditingController();
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
   @override
   Widget build(BuildContext context) {
@@ -208,29 +210,29 @@ class MyCustomFormState extends State<MyCustomForm> {
                       height: 10.0,
                     ),
                     TextFormField(
-                      controller: stdDOB,
-                      onSaved: (value) {
-                        stdDOB.text = value!;
-                      },
-                      validator: (value) {
-                        RegExp regex = RegExp(
-                            r"^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$");
-
-                        if (value!.isEmpty) {
-                          return ("Enter DOB");
-                        }
-                        if (!regex.hasMatch(value)) {
-                          return ("Enter Valid DOB");
-                        }
-                      },
+                      keyboardType: TextInputType.phone,
+                      autocorrect: false,
+                      controller: intialdateval,
                       decoration: InputDecoration(
-                        hintText: '(dd/mm/yyyy)',
                         labelText: 'DOB',
                         suffixIcon: const Icon(Icons.calendar_today),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
+                      onSaved: (value) {
+                        intialdateval.text = value!;
+                      },
+                      onTap: () {
+                        _selectDate();
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      maxLines: 1,
+                      validator: (value) {
+                        if (value!.isEmpty || value.isEmpty) {
+                          return 'Choose Date';
+                        }
+                      },
                     ),
                     const SizedBox(
                       height: 10.0,
@@ -315,5 +317,16 @@ class MyCustomFormState extends State<MyCustomForm> {
         ),
       ),
     );
+  }
+
+  Future _selectDate() async {
+    DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100));
+    if (picked != null) {
+      setState(() => {intialdateval.text = dateFormat.format(picked)});
+    }
   }
 }
