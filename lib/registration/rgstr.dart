@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:schoolsys/registration/parent.dart';
 import 'package:schoolsys/registration/student.dart';
 import 'package:schoolsys/registration/teacher.dart';
 
@@ -87,32 +86,6 @@ class _Rgstr extends State<Rgstr> {
                             ),
                             const Text(
                               'Teacher',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )
-                          ]),
-                    ),
-                  ),
-                  Card(
-                    color: Colors.grey.shade200,
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Parent(),
-                          )),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/parents.png',
-                              height: 120,
-                              width: 120,
-                            ),
-                            const Text(
-                              'Parent',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )
                           ]),
