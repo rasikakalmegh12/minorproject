@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:schoolsys/studenthome/details.dart';
-import 'package:schoolsys/studenthome/events.dart';
 import 'package:schoolsys/studenthome/exam.dart';
-import 'package:schoolsys/studenthome/homework.dart';
-import 'package:schoolsys/studenthome/marksheet.dart';
+import 'package:schoolsys/studenthome/attendance.dart';
 import 'package:schoolsys/studenthome/timetable.dart';
 
 class StdHome extends StatelessWidget {
@@ -121,60 +119,10 @@ class StdHome extends StatelessWidget {
                         height: 120,
                         width: 120,
                       ),
-                      const Text('Marksheet'),
+                      const Text('Attendance'),
                     ]),
               ),
             ),
-            Card(
-              color: Colors.grey.shade200,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Homework(
-                        title: 'SchoolSYS',
-                      ),
-                    )),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/homework.png',
-                        height: 120,
-                        width: 120,
-                      ),
-                      const Text('Homework'),
-                    ]),
-              ),
-            ),
-            Card(
-              color: Colors.grey.shade200,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Events(
-                        title: 'SchoolSYS',
-                      ),
-                    )),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/event.png',
-                        height: 120,
-                        width: 120,
-                      ),
-                      const Text('Events'),
-                    ]),
-              ),
-            )
           ]),
     );
   }
