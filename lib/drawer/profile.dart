@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   MapScreenState createState() => MapScreenState();
@@ -26,292 +24,280 @@ class MapScreenState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: const Text('Edit Profile')),
         body: Container(
-      color: Colors.white,
-      child: ListView(
-        children: <Widget>[
-          Column(
+          color: Colors.white,
+          child: ListView(
             children: <Widget>[
-              Container(
-                height: 250.0,
-                color: Colors.white,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                        padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 4.0),
-                              child: Text('MY PROFILE',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
-                                      fontFamily: 'sans-serif-light',
-                                      color: Colors.black)),
-                            )
-                          ],
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Stack(fit: StackFit.loose, children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                                width: 140.0,
-                                height: 140.0,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: ExactAssetImage('assets/user.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )),
-                          ],
-                        ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    height: 250.0,
+                    color: Colors.white,
+                    child: Column(
+                      children: <Widget>[
                         Padding(
-                            padding:
-                                const EdgeInsets.only(top: 90.0, right: 100.0),
-                            child: Row(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Stack(fit: StackFit.loose, children: <Widget>[
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                CircleAvatar(
-                                  backgroundColor: Colors.blue,
-                                  radius: 25.0,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      _getFromGallery();
-                                    },
-                                  ),
-                                ),
+                                Container(
+                                    width: 140.0,
+                                    height: 140.0,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image:
+                                            ExactAssetImage('assets/user.png'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
                               ],
-                            )),
-                      ]),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                color: const Color(0xffFFFFFF),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: const <Widget>[
-                                  Text(
-                                    'Parsonal Information',
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  _status ? _getEditIcon() : Container(),
-                                ],
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: const <Widget>[
-                                  Text(
-                                    'Name',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: "Enter Your Name",
-                                  ),
-                                  enabled: !_status,
-                                  autofocus: !_status,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: const <Widget>[
-                                  Text(
-                                    'Email ID',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Enter Email ID"),
-                                  enabled: !_status,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: const <Widget>[
-                                  Text(
-                                    'Mobile',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Enter Mobile Number"),
-                                  enabled: !_status,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                // ignore: avoid_unnecessary_containers
-                                child: Container(
-                                  child: const Text(
-                                    'Class',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                flex: 2,
-                              ),
-                              Expanded(
-                                // ignore: avoid_unnecessary_containers
-                                child: Container(
-                                  child: const Text(
-                                    'Enrollment Number ',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                flex: 2,
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: TextField(
-                                    decoration: const InputDecoration(
-                                        hintText: "Enter class"),
-                                    enabled: !_status,
-                                  ),
-                                ),
-                                flex: 2,
-                              ),
-                              Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Enter Enrollment number"),
-                                  enabled: !_status,
-                                ),
-                                flex: 2,
-                              ),
-                            ],
-                          )),
-                      !_status ? _getActionButtons() : Container(),
-                    ],
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 90.0, right: 100.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      backgroundColor: Colors.blue,
+                                      radius: 25.0,
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          _getFromGallery();
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                          ]),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )
+                  Container(
+                    color: const Color(0xffFFFFFF),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 25.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const <Widget>[
+                                      Text(
+                                        'Prsonal Information',
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      _status ? _getEditIcon() : Container(),
+                                    ],
+                                  )
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const <Widget>[
+                                      Text(
+                                        'Name',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        hintText: "Enter Your Name",
+                                      ),
+                                      enabled: !_status,
+                                      autofocus: !_status,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const <Widget>[
+                                      Text(
+                                        'Email ID',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                          hintText: "Enter Email ID"),
+                                      enabled: !_status,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const <Widget>[
+                                      Text(
+                                        'Mobile',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                          hintText: "Enter Mobile Number"),
+                                      enabled: !_status,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 25.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    // ignore: avoid_unnecessary_containers
+                                    child: Container(
+                                      child: const Text(
+                                        'Class',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    flex: 2,
+                                  ),
+                                  Expanded(
+                                    // ignore: avoid_unnecessary_containers
+                                    child: Container(
+                                      child: const Text(
+                                        'Enrollment Number ',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    flex: 2,
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25.0, right: 25.0, top: 2.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: TextField(
+                                        decoration: const InputDecoration(
+                                            hintText: "Enter class"),
+                                        enabled: !_status,
+                                      ),
+                                    ),
+                                    flex: 2,
+                                  ),
+                                  Flexible(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                          hintText: "Enter Enrollment number"),
+                                      enabled: !_status,
+                                    ),
+                                    flex: 2,
+                                  ),
+                                ],
+                              )),
+                          !_status ? _getActionButtons() : Container(),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 
   @override

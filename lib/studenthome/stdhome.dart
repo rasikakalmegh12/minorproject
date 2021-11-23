@@ -32,9 +32,7 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const StdDetails(
-                        title: 'SchoolSYS',
-                      ),
+                      builder: (context) => const StdDetails(),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -57,9 +55,7 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Timetable(
-                        title: 'SchoolSYS',
-                      ),
+                      builder: (context) => const Timetable(),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -82,9 +78,7 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ExamTT(
-                        title: 'SchoolSYS',
-                      ),
+                      builder: (context) => const ExamTT(),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -107,9 +101,7 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Marksheet(
-                        title: 'SchoolSYS',
-                      ),
+                      builder: (context) => const Attendance(),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

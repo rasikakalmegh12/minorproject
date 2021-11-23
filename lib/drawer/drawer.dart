@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:schoolsys/drawer/about.dart';
+import 'package:schoolsys/drawer/contact.dart';
+import 'package:schoolsys/drawer/changepass.dart';
 import 'package:schoolsys/login.dart';
 import 'package:schoolsys/drawer/profile.dart';
 import 'package:share_plus/share_plus.dart';
@@ -57,26 +58,29 @@ class _MyDrawerState extends State<MyDrawer> {
             leading: const Icon(Icons.verified_user),
             title: const Text('Edit Profile'),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProfilePage(
-                            title: 'SchoolSYS',
-                          )));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()));
             }),
         ListTile(
-            leading: const Icon(Icons.border_color),
-            title: const Text('About Us'),
+            leading: const Icon(Icons.password),
+            title: const Text('Change Password'),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const About()));
+                  MaterialPageRoute(builder: (context) => const Password()));
+            }),
+        ListTile(
+            leading: const Icon(Icons.contact_page),
+            title: const Text('Contact Us'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Contact()));
             }),
         ListTile(
           leading: const Icon(Icons.share),
           title: const Text('Share App'),
           onTap: () {
             Share.share(
-                'hey! check out this new app https://drive.google.com/file/d/1Kqk8Sh3IwLDl9wtSmoM7FkbpHX_aKxSA/view?usp=sharing');
+                'https://drive.google.com/file/d/1k9ZM7ZKvkeAeIeU1pX4IbIwxM1hE5Yq-/view?usp=sharing');
           },
         ),
         ListTile(

@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 
 class StdDetails extends StatelessWidget {
-  const StdDetails({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const StdDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: const Text('Student Details')),
       drawer: const MyDrawer(),
       // ignore: avoid_unnecessary_containers
       body: Container(
