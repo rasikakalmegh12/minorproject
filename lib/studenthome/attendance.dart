@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:schoolsys/drawer/drawer.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:overlay_container/overlay_container.dart';
-
-enum DropdownPosition {
-  // ignore: constant_identifier_names
-  BELOW,
-  // ignore: constant_identifier_names
-  RIGHT,
-}
+import 'package:schoolsys/drawer/drawer.dart';
 
 class Attendance extends StatefulWidget {
-  final String label;
-  final DropdownPosition position;
-
-  const Attendance({
-    required Key key,
-    required this.label,
-    this.position = DropdownPosition.BELOW,
-  }) : super(key: key);
+  const Attendance({Key? key}) : super(key: key);
 
   @override
   _AttendanceState createState() => _AttendanceState();
@@ -43,10 +30,6 @@ class _AttendanceState extends State<Attendance> {
           children: <Widget>[
             OverlayContainer(
               show: _dropdownShown,
-              position: const OverlayContainerPosition(
-                150,
-                45,
-              ),
               child: Container(
                 height: 70,
                 padding: const EdgeInsets.all(20),
@@ -66,6 +49,8 @@ class _AttendanceState extends State<Attendance> {
             ),
             GestureDetector(
               onTap: _toggleDropdown,
+              // ignore: missing_required_param
+
               child: Container(
                 height: 90,
                 width: double.infinity,
