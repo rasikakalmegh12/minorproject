@@ -55,7 +55,7 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Timetable(),
+                      builder: (context) => const Timetable(title: '',),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
