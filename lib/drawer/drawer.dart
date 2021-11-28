@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolsys/drawer/contact.dart';
 import 'package:schoolsys/drawer/changepass.dart';
@@ -86,9 +87,10 @@ class _MyDrawerState extends State<MyDrawer> {
         ListTile(
           leading: const Icon(Icons.exit_to_app),
           title: const Text('Logout'),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Login()));
+          onTap: () async {
+            await FirebaseAuth.instance.signOut();
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Login()));
           },
         ),
       ]),

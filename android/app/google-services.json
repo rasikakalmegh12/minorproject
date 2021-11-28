@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "57794076866-aqu9i8amrgbus6gunjek20f1itncu5u4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.schoolsys",
+            "certificate_hash": "312ee903a7aa2b5905bb1f20975f686485e613c8"
+          }
+        },
+        {
           "client_id": "57794076866-ebv8idtaod6a0g697u9nrtrbv3bqu6e8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

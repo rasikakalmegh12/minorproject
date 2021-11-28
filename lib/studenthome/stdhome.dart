@@ -9,14 +9,12 @@ import 'package:schoolsys/studenthome/exam.dart';
 import 'package:schoolsys/studenthome/timetable.dart';
 
 class StdHome extends StatelessWidget {
-  const StdHome({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const StdHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text('Student Homepage')),
       drawer: const MyDrawer(),
       body: GridView.count(
           mainAxisSpacing: 15,
@@ -57,7 +55,9 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Timetable(title: '',),
+                      builder: (context) => const Timetable(
+                        title: '',
+                      ),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

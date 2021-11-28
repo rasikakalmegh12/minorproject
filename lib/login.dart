@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schoolsys/database/login_function.dart';
 import 'package:schoolsys/registration/rgstr.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
 
@@ -8,6 +9,9 @@ class Login extends StatefulWidget {
   @override
   _Login createState() => _Login();
 }
+
+var loginType = ['Teacher', 'Student'];
+late String selectedScene = loginType.first;
 
 class _Login extends State<Login> {
   final formKey = GlobalKey<FormState>();
@@ -35,6 +39,36 @@ class _Login extends State<Login> {
                         'assets/login.png',
                       ),
                     ),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.blue.shade100,
+                        labelText: 'LoginType',
+                        labelStyle: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      value: selectedScene,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      style: const TextStyle(color: Colors.black),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedScene = newValue!;
+                        });
+                      },
+                      isExpanded: false,
+                      items: loginType
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(height: size.height * 0.02),
                     TextFormField(
                       controller: email,
                       autofocus: false,
@@ -122,12 +156,8 @@ class _Login extends State<Login> {
                               color: Colors.blue.shade500,
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => const StdHome(
-                                                title: 'SchooSYS',
-                                              )));
+                                  loginWithEmail(email.text, password.text,
+                                      context, selectedScene);
                                 }
                               },
                             ),
