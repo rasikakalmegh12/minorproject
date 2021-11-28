@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schoolsys/database/login_function.dart';
-import 'package:schoolsys/registration/rgstr.dart';
+import 'package:schoolsys/registration/register_type.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
 
 class Login extends StatefulWidget {
@@ -10,7 +10,7 @@ class Login extends StatefulWidget {
   _Login createState() => _Login();
 }
 
-var loginType = ['LoginType', 'Teacher', 'Student'];
+var loginType = ['Choose LoginType', 'Teacher', 'Student'];
 late String selectedScene = loginType.first;
 
 class _Login extends State<Login> {

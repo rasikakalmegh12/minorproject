@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:schoolsys/main.dart';
-import 'package:schoolsys/registration/teacher1.dart';
+import 'package:schoolsys/registration/teacher_registration.dart';
 
 class Teacher extends StatelessWidget {
   const Teacher({Key? key}) : super(key: key);

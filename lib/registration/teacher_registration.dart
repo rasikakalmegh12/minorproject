@@ -41,7 +41,8 @@ class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
   bool viewPass = true;
   bool confirmViewPass = true;
-  final TextEditingController username = TextEditingController();
+  final TextEditingController teacherName = TextEditingController();
+  final TextEditingController teacherEmail = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController confirm = TextEditingController();
   @override
@@ -64,25 +65,53 @@ class MyCustomFormState extends State<MyCustomForm> {
                       height: 10.0,
                     ),
                     TextFormField(
-                      controller: username,
+                      controller: teacherName,
                       onSaved: (value) {
-                        username.text = value!;
+                        teacherName.text = value!;
                       },
                       validator: (value) {
                         RegExp regex =
-                            RegExp(r"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+                            RegExp(r"^(?=.*[a-z])(?=.*[A-Z]).{3,50}$");
 
                         if (value!.isEmpty) {
-                          return ("Enter Username");
+                          return ("Enter Your Name");
                         }
                         if (!regex.hasMatch(value)) {
-                          return ("Enter Valid Username ");
+                          return ("Enter Valid Name");
                         }
                       },
                       decoration: InputDecoration(
-                        hintText: 'Enter User Name',
-                        labelText: 'User Name',
+                        hintText: 'Name',
+                        labelText: 'Fullname',
                         suffixIcon: const Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextFormField(
+                      controller: teacherEmail,
+                      onSaved: (value) {
+                        teacherEmail.text = value!;
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return ("Enter Your Email!");
+                        }
+                        if (!RegExp(
+                                r"^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$")
+                            .hasMatch(value)) {
+                          return ("Enter A Valid Email");
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Enter your Email',
+                        labelText: 'Email',
+                        suffixIcon: const Icon(Icons.email),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),

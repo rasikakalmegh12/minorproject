@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:schoolsys/login.dart';
-import 'package:schoolsys/registration/student1.dart';
+import 'package:schoolsys/registration/student_registration.dart';
 import 'package:intl/intl.dart';
 
 class Student extends StatelessWidget {
@@ -47,6 +47,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   final TextEditingController stdGender = TextEditingController();
   final TextEditingController stdAddress = TextEditingController();
   final TextEditingController intialdateval = TextEditingController();
+  final TextEditingController username = TextEditingController();
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 
   @override
@@ -65,6 +66,31 @@ class MyCustomFormState extends State<MyCustomForm> {
                   children: [
                     const SizedBox(
                       height: 15.0,
+                    ),
+                    TextFormField(
+                      controller: username,
+                      onSaved: (value) {
+                        username.text = value!;
+                      },
+                      validator: (value) {
+                        RegExp regex =
+                            RegExp(r"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+
+                        if (value!.isEmpty) {
+                          return ("Enter Username");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          return ("Enter Valid Username ");
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Enter User Name',
+                        labelText: 'User Name',
+                        suffixIcon: const Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
                     ),
                     TextFormField(
                       controller: stdName,
@@ -94,6 +120,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                     const SizedBox(
                       height: 10.0,
                     ),
+
+                    //Delete
                     TextFormField(
                       controller: stdEnroll,
                       onSaved: (value) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:schoolsys/registration/student.dart';
+import 'package:schoolsys/registration/student_registration.dart';
+import 'package:schoolsys/registration/teacher_registration.dart';
+import 'package:schoolsys/registration/z_student.dart';
 import 'package:schoolsys/registration/teacher.dart';
 
 class Rgstr extends StatefulWidget {
@@ -50,7 +52,7 @@ class _Rgstr extends State<Rgstr> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Student(),
+                            builder: (context) => const Student1(),
                           )),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +76,7 @@ class _Rgstr extends State<Rgstr> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Teacher(),
+                            builder: (context) => const Teacher1(),
                           )),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
