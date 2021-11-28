@@ -160,7 +160,7 @@ class _CalendarPageState extends State<CalendarPage> {
             height: 10,
           ),
           Container(
-            height: 185,
+            height: 100,
             width: double.infinity,
             decoration: BoxDecoration(
                 border: Border.all(width: 1, color: Colors.grey),

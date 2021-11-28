@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        "Hi Jackie",
+                        "Hi rasika",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w900,
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
           top: 185,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            height: MediaQuery.of(context).size.height - 145,
+            height: MediaQuery.of(context).size.height - 100,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -251,10 +251,10 @@ class _HomePageState extends State<HomePage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       padding: const EdgeInsets.all(10),
-      height: 100,
+      height: 50,
       decoration: BoxDecoration(
         color: const Color(0xFFF9F9FB),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -263,7 +263,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Text(
-                "07:00",
+                "10:00",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
@@ -283,9 +283,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width - 160,
+                width: MediaQuery.of(context).size.width - 50,
                 child: const Text(
-                  "The Basic of Typography II",
+                  "hhhhhh",
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

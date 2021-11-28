@@ -43,7 +43,7 @@ class Timetable extends StatelessWidget {
                               height: 120,
                               width: 120,
                             ),
-                            const Text('Student',
+                            const Text('Home',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                           ]),
                     ),
@@ -68,7 +68,7 @@ class Timetable extends StatelessWidget {
                               width: 120,
                             ),
                             const Text(
-                              'Teacher',
+                              'Calender',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             )
                           ]),

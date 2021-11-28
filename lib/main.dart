@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:schoolsys/splash.dart';
+
 
 void main() {
   runApp(const MyApp());
