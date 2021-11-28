@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schoolsys/database/signup_function.dart';
 import 'package:schoolsys/login.dart';
 
 class Student1 extends StatelessWidget {
@@ -200,10 +201,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                             color: Colors.blue.shade600,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Login()));
+                                studentRegistration(stdName.text, stdEmail.text,
+                                    password.text, context);
                               }
                             },
                           ),
