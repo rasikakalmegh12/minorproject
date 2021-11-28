@@ -34,7 +34,7 @@ class _Login extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 350,
+                      height: 300,
                       child: Image.asset(
                         'assets/login.png',
                       ),
