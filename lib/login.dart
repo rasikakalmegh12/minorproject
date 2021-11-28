@@ -10,7 +10,7 @@ class Login extends StatefulWidget {
   _Login createState() => _Login();
 }
 
-var loginType = ['Teacher', 'Student'];
+var loginType = ['LoginType', 'Teacher', 'Student'];
 late String selectedScene = loginType.first;
 
 class _Login extends State<Login> {
@@ -43,7 +43,7 @@ class _Login extends State<Login> {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.blue.shade100,
-                        labelText: 'LoginType',
+                        hintText: 'LoginType',
                         labelStyle: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                         border: OutlineInputBorder(
