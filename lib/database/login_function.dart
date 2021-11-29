@@ -1,11 +1,9 @@
-//login function
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
 import 'package:schoolsys/teacher_home/teachers_home.dart';
 
+//login function
 void loginWithEmail(String email, String password, BuildContext context,
     String loginType) async {
   try {

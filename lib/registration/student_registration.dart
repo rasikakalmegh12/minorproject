@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schoolsys/database/signup_function.dart';
+import 'package:schoolsys/database/registration_functions.dart';
 import 'package:schoolsys/login.dart';
 
 class Student1 extends StatelessWidget {

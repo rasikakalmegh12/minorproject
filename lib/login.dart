@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schoolsys/database/login_function.dart';
 import 'package:schoolsys/registration/register_type.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
@@ -156,8 +157,17 @@ class _Login extends State<Login> {
                               color: Colors.blue.shade500,
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  loginWithEmail(email.text, password.text,
-                                      context, selectedScene);
+                                  if (selectedScene == 'Choose LoginType') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text('Please Select a login Type'),
+                                      ),
+                                    );
+                                  } else {
+                                    loginWithEmail(email.text, password.text,
+                                        context, selectedScene);
+                                  }
                                 }
                               },
                             ),

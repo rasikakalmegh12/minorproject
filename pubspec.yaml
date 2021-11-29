@@ -45,6 +45,7 @@ dependencies:
   image_picker_for_web: ^2.1.4
   contactus: ^1.2.0
   overlay_container: ^0.0.5+1
+  fluttertoast: ^8.0.8
   
 
 dev_dependencies:
