@@ -4,7 +4,9 @@ import 'package:schoolsys/drawer/contact.dart';
 import 'package:schoolsys/drawer/changepass.dart';
 import 'package:schoolsys/login.dart';
 import 'package:schoolsys/drawer/profile.dart';
+import 'package:schoolsys/preferences_functions.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -88,6 +90,8 @@ class _MyDrawerState extends State<MyDrawer> {
           leading: const Icon(Icons.exit_to_app),
           title: const Text('Logout'),
           onTap: () async {
+            SharedPreferences shared = await SharedPreferences.getInstance();
+            shared.clear();
             await FirebaseAuth.instance.signOut();
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => Login()));

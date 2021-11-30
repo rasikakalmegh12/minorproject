@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schoolsys/database/login_function.dart';
 import 'package:schoolsys/registration/register_type.dart';
+import 'package:schoolsys/preferences_functions.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -155,7 +157,7 @@ class _Login extends State<Login> {
                                 style: TextStyle(fontSize: 20.0),
                               ),
                               color: Colors.blue.shade500,
-                              onPressed: () {
+                              onPressed: () async {
                                 if (formKey.currentState!.validate()) {
                                   if (selectedScene == 'Choose LoginType') {
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -165,6 +167,10 @@ class _Login extends State<Login> {
                                       ),
                                     );
                                   } else {
+                                    SharedPreferenceData.saveLoginType(
+                                        selectedScene);
+
+                                    SharedPreferenceData.saveMail(email.text);
                                     loginWithEmail(email.text, password.text,
                                         context, selectedScene);
                                   }
