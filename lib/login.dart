@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schoolsys/database/login_function.dart';
 import 'package:schoolsys/registration/register_type.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,12 +21,36 @@ class _Login extends State<Login> {
   bool viewPassword = true;
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+
+ final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const StdHome()
+        ),
+      );
+    }
+
+    return firebaseApp;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
+     return Scaffold(
+      body: FutureBuilder(
+          future: _initializeFirebase(),
+          
+         builder: (context, snapshot) {
+     
+        return SingleChildScrollView(
           // ignore: avoid_unnecessary_containers
           child: Container(
             child: Padding(
@@ -202,7 +228,8 @@ class _Login extends State<Login> {
               ),
             ),
           ),
-        ),
+        );
+         }  
       ),
     );
   }

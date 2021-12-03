@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter/rendering.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -14,8 +15,9 @@ class StdHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Student Homepage')),
+      appBar: AppBar(title: Text('Student Homepage'),centerTitle: true,),
       drawer: const MyDrawer(),
+      
       body: GridView.count(
           mainAxisSpacing: 15,
           crossAxisSpacing: 15,
@@ -42,7 +44,7 @@ class StdHome extends StatelessWidget {
                         height: 120,
                         width: 120,
                       ),
-                      const Text('Student Deatils'),
+                      const Text('Student Details'),
                     ]),
               ),
             ),

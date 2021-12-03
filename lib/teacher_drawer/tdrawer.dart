@@ -4,17 +4,18 @@ import 'package:schoolsys/drawer/contact.dart';
 import 'package:schoolsys/drawer/changepass.dart';
 import 'package:schoolsys/login.dart';
 import 'package:schoolsys/drawer/profile.dart';
-import 'package:schoolsys/studenthome/stdhome.dart';
+import 'package:schoolsys/teacher_home/teachers_home.dart';
+
 import 'package:share_plus/share_plus.dart';
 
-class MyDrawer extends StatefulWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+class MyDrawer1 extends StatefulWidget {
+  const MyDrawer1({Key? key}) : super(key: key);
 
   @override
   _MyDrawerState createState() => _MyDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class _MyDrawerState extends State<MyDrawer1> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -55,7 +56,7 @@ class _MyDrawerState extends State<MyDrawer> {
           leading: const Icon(Icons.home),
           title: const Text('Home'),
           onTap: () => {Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const StdHome()))
+                  MaterialPageRoute(builder: (context) => const TeacherHome()))
                   }),
         ListTile(
             leading: const Icon(Icons.verified_user),
