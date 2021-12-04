@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^3.2.0
   firebase_core: ^1.10.0
   cloud_firestore: ^3.1.0
+  syncfusion_flutter_calendar: ^19.1.59
   
   share_plus: ^3.0.4
   image_picker: ^0.8.4+4
