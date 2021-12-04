@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schoolsys/database/login_function.dart';
 import 'package:schoolsys/login.dart';
 
 class Password extends StatelessWidget {
@@ -33,8 +34,9 @@ class MyCustomFormState extends State<MyCustomForm> {
   // and allows validation of the form.
   // ignore: unused_field
   final _formKey = GlobalKey<FormState>();
-  bool viewPass = true;
-  bool confirmViewPass = true;
+  bool currentPass = true;
+  bool newPass = true;
+  bool confirmNewPass = true;
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController newpass = TextEditingController();
@@ -97,43 +99,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       height: 10.0,
                     ),
                     TextFormField(
-                      obscureText: viewPass,
-                      onSaved: (value) {
-                        password.text = value!;
-                      },
-                      controller: newpass,
-                      validator: (value) {
-                        RegExp regex = RegExp(
-                            r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,20}$");
-
-                        if (value!.isEmpty) {
-                          return ("Enter Password");
-                        }
-                        if (!regex.hasMatch(value)) {
-                          return ("Enter Valid Password");
-                        }
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter current Password',
-                        suffixIcon: InkWell(
-                            child: viewPass
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                            onTap: () {
-                              setState(() {
-                                viewPass = !viewPass;
-                              });
-                            }),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      obscureText: viewPass,
+                      obscureText: currentPass,
                       onSaved: (value) {
                         password.text = value!;
                       },
@@ -150,14 +116,14 @@ class MyCustomFormState extends State<MyCustomForm> {
                         }
                       },
                       decoration: InputDecoration(
-                        hintText: 'Enter new Password',
+                        hintText: 'Enter current Password',
                         suffixIcon: InkWell(
-                            child: viewPass
+                            child: currentPass
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off),
                             onTap: () {
                               setState(() {
-                                viewPass = !viewPass;
+                                currentPass = !currentPass;
                               });
                             }),
                         border: OutlineInputBorder(
@@ -169,7 +135,43 @@ class MyCustomFormState extends State<MyCustomForm> {
                       height: 10.0,
                     ),
                     TextFormField(
-                      obscureText: confirmViewPass,
+                      obscureText: newPass,
+                      onSaved: (value) {
+                        password.text = value!;
+                      },
+                      controller: newpass,
+                      validator: (value) {
+                        RegExp regex = RegExp(
+                            r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,20}$");
+
+                        if (value!.isEmpty) {
+                          return ("Enter Password");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          return ("Enter Valid Password");
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Enter new Password',
+                        suffixIcon: InkWell(
+                            child: newPass
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                            onTap: () {
+                              setState(() {
+                                newPass = !newPass;
+                              });
+                            }),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextFormField(
+                      obscureText: confirmNewPass,
                       controller: confirm,
                       onSaved: (value) {
                         confirm.text = value!;
@@ -178,19 +180,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                         if (value!.isEmpty) {
                           return ("Enter Password");
                         }
-                        if (value != password.text) {
+                        if (value != newpass.text) {
                           return ("Password Does Not match!");
                         }
                       },
                       decoration: InputDecoration(
                         hintText: 'Confirm Password',
                         suffixIcon: InkWell(
-                            child: confirmViewPass
+                            child: confirmNewPass
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off),
                             onTap: () {
                               setState(() {
-                                confirmViewPass = !confirmViewPass;
+                                confirmNewPass = !confirmNewPass;
                               });
                             }),
                         border: OutlineInputBorder(
@@ -219,10 +221,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                               color: Colors.blue,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => const Login()));
+                                  changePassword(email.text, password.text,
+                                      newpass.text, context);
                                 }
                               },
                             ),

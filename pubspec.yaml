@@ -46,6 +46,8 @@ dependencies:
   contactus: ^1.2.0
   overlay_container: ^0.0.5+1
   fluttertoast: ^8.0.8
+  shared_preferences: ^2.0.9
+ 
   
 
 dev_dependencies:
