@@ -1,14 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schoolsys/database/login_function.dart';
 import 'package:schoolsys/registration/register_type.dart';
 import 'package:schoolsys/preferences_functions.dart';
 import 'package:schoolsys/studenthome/stdhome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

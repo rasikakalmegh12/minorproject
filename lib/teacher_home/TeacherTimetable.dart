@@ -1,6 +1,9 @@
 // ignore_for_file: file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:schoolsys/database/teacher_model.dart';
+import 'package:schoolsys/database/timetable_insertion.dart';
 import 'package:schoolsys/teacher_drawer/tdrawer.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'dart:math';
@@ -13,9 +16,20 @@ class TTimetable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    const appTitle = 'TimeTable';
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoadDataFromFireStore(),
+      title: appTitle,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(appTitle),
+        ),
+        drawer: const MyDrawer1(),
+        body: const LoadDataFromFireStore(),
+      ),
     );
   }
 }
@@ -28,9 +42,13 @@ class LoadDataFromFireStore extends StatefulWidget {
 }
 
 class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
+  final _formKey = GlobalKey<FormState>();
   List<Color> _colorCollection = <Color>[];
   MeetingDataSource? events;
-  final List<String> options = <String>['Add', 'Delete', 'Update'];
+  final TextEditingController subject = TextEditingController();
+  final TextEditingController date = TextEditingController();
+  final TextEditingController start_time = TextEditingController();
+  final TextEditingController end_time = TextEditingController();
   final databaseReference = FirebaseFirestore.instance;
 
   @override
@@ -45,17 +63,15 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
   }
 
   Future<void> getDataFromFireStore() async {
-    var snapShotsValue = await databaseReference
-        .collection("CalendarAppointmentCollection")
-        .get();
+    var snapShotsValue = await databaseReference.collection("timetable").get();
 
     final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
         .map((e) => Meeting(
-            eventName: e.data()['Subject'],
+            eventName: e.data()['subject'],
             from:
-                DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['StartTime']),
-            to: DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['EndTime']),
+                DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['start_time']),
+            to: DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['end_time']),
             background: _colorCollection[random.nextInt(9)],
             isAllDay: false))
         .toList();
@@ -67,63 +83,245 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          leading: PopupMenuButton<String>(
-        icon: const Icon(Icons.settings),
-        itemBuilder: (BuildContext context) => options.map((String choice) {
-          return PopupMenuItem<String>(
-            value: choice,
-            child: Text(choice),
-          );
-        }).toList(),
-        onSelected: (String value) {
-          if (value == 'Add') {
-            databaseReference
-                .collection("CalendarAppointmentCollection")
-                .doc("1")
-                .set({
-              'Subject': 'Mastering Flutter',
-              'StartTime': '01/12/2021 10:30:00',
-              'EndTime': '01/12/2021 11:30:00'
-            });
-          } else if (value == "Delete") {
-            try {
-              databaseReference
-                  .collection('CalendarAppointmentCollection')
-                  .doc('1')
-                  .delete();
-            } catch (e) {}
-          } else if (value == "Update") {
-            try {
-              databaseReference
-                  .collection('CalendarAppointmentCollection')
-                  .doc('1')
-                  .update({'Subject': 'Meeting'});
-            } catch (e) {}
-          }
-        },
-      )),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return Container(
-                height: constraints.maxHeight / 2,
-                color: Colors.red,
-                child: SfCalendar(
-                  view: CalendarView.week,
-                  initialDisplayDate: DateTime(2021, 12, 1, 9, 30, 0),
-                  dataSource: events,
-                  timeSlotViewSettings: const TimeSlotViewSettings(
-                      minimumAppointmentDuration: Duration(minutes: 30)),
-
-                  // monthViewSettings: MonthViewSettings(
-                  //   showAgenda: true,
-                  // ),
-                ));
-          },
+      body: Center(
+        // ignore: sized_box_for_whitespace, avoid_unnecessary_containers
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Material(
+                        color: Colors.grey.shade200,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30.0)),
+                        elevation: 10,
+                        child: SfCalendar(
+                          view: CalendarView.week,
+                          initialDisplayDate: DateTime(2021, 12, 1, 9, 30, 0),
+                          dataSource: events,
+                          timeSlotViewSettings: const TimeSlotViewSettings(
+                              minimumAppointmentDuration:
+                                  Duration(minutes: 30)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextFormField(
+                        controller: subject,
+                        style: const TextStyle(color: Colors.blue),
+                        decoration: InputDecoration(
+                          labelText: 'Subject Name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        onSaved: (value) {
+                          subject.text = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      TextFormField(
+                        controller: date,
+                        style: const TextStyle(color: Colors.blue),
+                        decoration: InputDecoration(
+                          labelText: 'Date',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        onSaved: (value) {
+                          date.text = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: TextFormField(
+                            controller: start_time,
+                            style: const TextStyle(color: Colors.blue),
+                            decoration: InputDecoration(
+                              labelText: 'Start Time',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            onSaved: (value) {
+                              start_time.text = value!;
+                            },
+                          )),
+                          const SizedBox(
+                            width: 17,
+                          ),
+                          Expanded(
+                              child: TextFormField(
+                            controller: end_time,
+                            style: const TextStyle(color: Colors.blue),
+                            decoration: InputDecoration(
+                              labelText: 'End Time',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            onSaved: (value) {
+                              end_time.text = value!;
+                            },
+                          ))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                // ignore: avoid_unnecessary_containers
+                                child: Container(
+                                    // ignore: deprecated_member_use
+                                    child: RaisedButton(
+                                  child: const Text("Add"),
+                                  textColor: Colors.white,
+                                  color: Colors.blue,
+                                  onPressed: () {
+                                    var finalStartDate =
+                                        '${date.text}' ' ' '${start_time.text}';
+                                    var finalEndDate =
+                                        '${date.text}' ' ' '${end_time.text}';
+                                    timetableInsertion(subject.text,
+                                        finalStartDate, finalEndDate, context);
+                                    // databaseReference
+                                    //     .collection(
+                                    //         "CalendarAppointmentCollection")
+                                    //     .doc("1")
+                                    //     .set({
+                                    //   'Subject': subject.text,
+                                    //   'StartTime': '${date.text}'
+                                    //       ' '
+                                    //       '${start_time.text}',
+                                    //   'EndTime': '${date.text}'
+                                    //       ' '
+                                    //       '${end_time.text}'
+                                    // });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                )),
+                              ),
+                              flex: 2,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                // ignore: avoid_unnecessary_containers
+                                child: Container(
+                                    // ignore: deprecated_member_use
+                                    child: RaisedButton(
+                                  child: const Text("Delete"),
+                                  textColor: Colors.white,
+                                  color: Colors.blue,
+                                  onPressed: () async {
+                                    User? user =
+                                        FirebaseAuth.instance.currentUser;
+                                    try {
+                                      await databaseReference
+                                          .collection('timetable')
+                                          .doc(user!.uid)
+                                          .delete();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Subject deleted successfully'),
+                                        ),
+                                      );
+                                    } catch (e) {}
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                )),
+                              ),
+                              flex: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: 130.0,
+                                height: 50.0,
+                                child:
+                                    // ignore: deprecated_member_use
+                                    RaisedButton(
+                                  child: const Text("Update"),
+                                  textColor: Colors.white,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    try {
+                                      databaseReference
+                                          .collection('teacher')
+                                          .doc('1')
+                                          .update({'Subject': subject.text});
+                                    } catch (e) {}
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                )),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                    ]),
+              ),
+            ),
+          ),
         ),
       ),
+      // body: Align(
+      //   alignment: Alignment.topCenter,
+      //   child: LayoutBuilder(
+      //     builder: (BuildContext context, BoxConstraints constraints) {
+      //       return Container(
+      //           height: constraints.maxHeight / 2,
+      //           color: Colors.red,
+      //           child: SfCalendar(
+      //             view: CalendarView.week,
+      //             initialDisplayDate: DateTime(2021, 12, 1, 9, 30, 0),
+      //             dataSource: events,
+      //             timeSlotViewSettings: const TimeSlotViewSettings(
+      //                 minimumAppointmentDuration: Duration(minutes: 30)),
+
+      //             // monthViewSettings: MonthViewSettings(
+      //             //   showAgenda: true,
+      //             // ),
+      //           ));
+      //     },
+      //   ),
+      // ),
     );
   }
 

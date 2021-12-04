@@ -15,9 +15,11 @@ class StdHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Student Homepage'),centerTitle: true,),
+      appBar: AppBar(
+        title: const Text('Student Homepage'),
+        centerTitle: true,
+      ),
       drawer: const MyDrawer(),
-      
       body: GridView.count(
           mainAxisSpacing: 15,
           crossAxisSpacing: 15,

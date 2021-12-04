@@ -44,17 +44,15 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
   }
 
   Future<void> getDataFromFireStore() async {
-    var snapShotsValue = await databaseReference
-        .collection("CalendarAppointmentCollection")
-        .get();
+    var snapShotsValue = await databaseReference.collection("timetable").get();
 
-    final Random random = Random();
+    final Random random = new Random();
     List<Meeting> list = snapShotsValue.docs
         .map((e) => Meeting(
-            eventName: e.data()['Subject'],
+            eventName: e.data()['subject'],
             from:
-                DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['StartTime']),
-            to: DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['EndTime']),
+                DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['start_time']),
+            to: DateFormat('dd/MM/yyyy HH:mm:ss').parse(e.data()['end_time']),
             background: _colorCollection[random.nextInt(9)],
             isAllDay: false))
         .toList();
