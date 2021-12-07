@@ -2,7 +2,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:schoolsys/database/teacher_model.dart';
 import 'package:schoolsys/database/timetable_insertion.dart';
 import 'package:schoolsys/teacher_drawer/tdrawer.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -65,7 +64,7 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
   Future<void> getDataFromFireStore() async {
     var snapShotsValue = await databaseReference.collection("timetable").get();
 
-    final Random random = new Random();
+    final Random random = Random();
     List<Meeting> list = snapShotsValue.docs
         .map((e) => Meeting(
             eventName: e.data()['subject'],
