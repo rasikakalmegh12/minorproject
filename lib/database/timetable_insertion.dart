@@ -5,21 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:schoolsys/database/timetable_model.dart';
 
 //Timetable Insertion function
-void timetableInsertion(String subject, String start_date, String end_date,
+void timetableInsertion(String subject, String startDate, String endDate,
     BuildContext context) async {
   // calling firestore
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  User? user = FirebaseAuth.instance.currentUser;
 
   TimetableModel timetable = TimetableModel();
-  timetable.uid = user!.uid;
+  timetable.uid = "1";
   timetable.subject = subject;
-  timetable.start_time = start_date;
-  timetable.end_time = end_date;
+  timetable.start_time = startDate;
+  timetable.end_time = endDate;
 
   await firebaseFirestore
       .collection("timetable")
-      .doc(user.uid)
+      .doc('1')
       .set(timetable.toMap());
 
   ScaffoldMessenger.of(context).showSnackBar(

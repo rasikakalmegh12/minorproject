@@ -203,19 +203,6 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
                                         '${date.text}' ' ' '${end_time.text}';
                                     timetableInsertion(subject.text,
                                         finalStartDate, finalEndDate, context);
-                                    // databaseReference
-                                    //     .collection(
-                                    //         "CalendarAppointmentCollection")
-                                    //     .doc("1")
-                                    //     .set({
-                                    //   'Subject': subject.text,
-                                    //   'StartTime': '${date.text}'
-                                    //       ' '
-                                    //       '${start_time.text}',
-                                    //   'EndTime': '${date.text}'
-                                    //       ' '
-                                    //       '${end_time.text}'
-                                    // });
                                   },
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
@@ -300,27 +287,6 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
           ),
         ),
       ),
-      // body: Align(
-      //   alignment: Alignment.topCenter,
-      //   child: LayoutBuilder(
-      //     builder: (BuildContext context, BoxConstraints constraints) {
-      //       return Container(
-      //           height: constraints.maxHeight / 2,
-      //           color: Colors.red,
-      //           child: SfCalendar(
-      //             view: CalendarView.week,
-      //             initialDisplayDate: DateTime(2021, 12, 1, 9, 30, 0),
-      //             dataSource: events,
-      //             timeSlotViewSettings: const TimeSlotViewSettings(
-      //                 minimumAppointmentDuration: Duration(minutes: 30)),
-
-      //             // monthViewSettings: MonthViewSettings(
-      //             //   showAgenda: true,
-      //             // ),
-      //           ));
-      //     },
-      //   ),
-      // ),
     );
   }
 

@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:intl/intl.dart';
 
@@ -37,8 +40,42 @@ class MyStudentDetailsForm extends StatefulWidget {
 
 class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
   final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic>? data;
+  final TextEditingController fullname = TextEditingController();
+  var name;
+
+  @override
+  void initState() {
+    getDataFromFireStore().then((results) {
+      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+        setState(() {});
+      });
+    });
+    super.initState();
+  }
+
+  Future<void> getDataFromFireStore() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    // final user = await FirebaseAuth.instance.currentUser;
+    var collection = FirebaseFirestore.instance.collection('students');
+    var docSnapshot = await collection.doc(user!.uid).get();
+    if (docSnapshot.exists) {
+      data = docSnapshot.data();
+      name = data?['fullname'];
+      //  print(name);
+      //  print(user.uid);
+      setState(() {
+        name = data?['fullname'];
+        print(name);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (name != null) {
+      fullname.text = name;
+    }
     return Scaffold(
       body: Center(
         // ignore: sized_box_for_whitespace, avoid_unnecessary_containers
@@ -66,6 +103,7 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         height: 20.0,
                       ),
                       TextFormField(
+                        controller: fullname,
                         style: const TextStyle(color: Colors.blue),
                         decoration: InputDecoration(
                           labelText: 'Full Name',
@@ -254,7 +292,15 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
-                          ))
+                          )),
+                          Expanded(
+                            child: ElevatedButton(
+                              child: const Text('Save'),
+                              onPressed: () {
+                                getDataFromFireStore();
+                              },
+                            ),
+                          )
                         ],
                       ),
                     ]),
