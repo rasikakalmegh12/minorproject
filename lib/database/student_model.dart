@@ -4,7 +4,15 @@ class StudentModel {
   String? fullname;
   String? address;
   String? username;
-  String? gender, phone, enroll, dob, stdclass;
+  String? gender,
+      phone,
+      enroll,
+      dob,
+      stdclass,
+      religion,
+      category,
+      caste,
+      nationality;
   StudentModel(
       {this.uid,
       this.email,
@@ -15,7 +23,11 @@ class StudentModel {
       this.stdclass,
       this.username,
       this.enroll,
-      this.address});
+      this.address,
+      this.religion,
+      this.category,
+      this.caste,
+      this.nationality});
 
   //reciving data from server
   factory StudentModel.fromMap(map) {
@@ -29,7 +41,11 @@ class StudentModel {
         dob: map['dob'],
         address: map['address'],
         stdclass: map['class'],
-        enroll: map['enroll']);
+        enroll: map['enroll'],
+        religion: map['religion'],
+        category: map['category'],
+        caste: map['caste'],
+        nationality: map['nationality']);
   }
 
   //sending data to our server
@@ -45,6 +61,10 @@ class StudentModel {
       'address': address,
       'username': username,
       'dob': dob,
+      'religion': religion,
+      'category': category,
+      'caste': caste,
+      'nationality': nationality,
     };
   }
 }

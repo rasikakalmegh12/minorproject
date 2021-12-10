@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:schoolsys/database/registration_functions.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:intl/intl.dart';
 
@@ -71,6 +72,17 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
     }
   }
 
+  final TextEditingController enroll = TextEditingController();
+//final TextEditingController dob = TextEditingController();
+//final TextEditingController gender = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController address = TextEditingController();
+  final TextEditingController stdclass = TextEditingController();
+  final TextEditingController religion = TextEditingController();
+  final TextEditingController category = TextEditingController();
+  final TextEditingController caste = TextEditingController();
+  final TextEditingController nationality = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     if (name != null) {
@@ -99,6 +111,21 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                               width: 100, height: 100),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 250.0),
+
+                        // ignore: avoid_unnecessary_containers
+                        child: Container(
+                            // ignore: deprecated_member_use
+                            child: RaisedButton(
+                          child: const Text("Edit"),
+                          textColor: Colors.white,
+                          color: Colors.blue,
+                          onPressed: () {},
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100.0)),
+                        )),
+                      ),
                       const SizedBox(
                         height: 20.0,
                       ),
@@ -119,6 +146,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         children: [
                           Expanded(
                               child: TextFormField(
+                            controller: enroll,
+                            onSaved: (value) {
+                              enroll.text = value!;
+                            },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'Roll Number',
@@ -132,6 +163,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           ),
                           Expanded(
                               child: TextFormField(
+                            controller: stdclass,
+                            onSaved: (value) {
+                              stdclass.text = value!;
+                            },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'Class',
@@ -146,6 +181,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         height: 10.0,
                       ),
                       TextFormField(
+                        controller: address,
+                        onSaved: (value) {
+                          address.text = value!;
+                        },
                         style: const TextStyle(color: Colors.blue),
                         decoration: InputDecoration(
                           labelText: 'Address',
@@ -160,6 +199,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                       Row(children: [
                         Expanded(
                             child: TextFormField(
+                          controller: phone,
+                          onSaved: (value) {
+                            phone.text = value!;
+                          },
                           style: const TextStyle(color: Colors.blue),
                           decoration: InputDecoration(
                             labelText: 'Mobile Number',
@@ -242,6 +285,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         children: [
                           Expanded(
                               child: TextFormField(
+                            controller: religion,
+                            onSaved: (value) {
+                              religion.text = value!;
+                            },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'Religion',
@@ -255,6 +302,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           ),
                           Expanded(
                               child: TextFormField(
+                            controller: category,
+                            onSaved: (value) {
+                              category.text = value!;
+                            },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'Category',
@@ -272,6 +323,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         children: [
                           Expanded(
                               child: TextFormField(
+                            controller: caste,
+                            onSaved: (value) {
+                              caste.text = value!;
+                            },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'Caste',
@@ -285,6 +340,10 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           ),
                           Expanded(
                               child: TextFormField(
+                            controller: nationality,
+                            onSaved: (value) {
+                              nationality.text = value!;
+                            },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'Nationality',
@@ -302,6 +361,35 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                             ),
                           )
                         ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: const Text('Save'),
+                              color: Colors.blue.shade600,
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  updatestudentdetails(
+                                      enroll.text,
+                                      stdclass.text,
+                                      address.text,
+                                      phone.text,
+                                      "",
+                                      "",
+                                      religion.text,
+                                      category.text,
+                                      caste.text,
+                                      nationality.text,
+                                      context);
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ]),
               ),
