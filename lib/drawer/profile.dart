@@ -218,7 +218,7 @@ class MapScreenState extends State<ProfilePage>
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   Flexible(
-                                    child: TextField(
+                                    child: TextFormField(
                                       decoration: const InputDecoration(
                                           hintText: "Enter Mobile Number"),
                                       enabled: !_status,

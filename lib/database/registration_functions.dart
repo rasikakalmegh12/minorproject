@@ -92,3 +92,47 @@ postTeacherDetailsToFirestore(String name, BuildContext context) async {
   Navigator.pushAndRemoveUntil((context),
       MaterialPageRoute(builder: (context) => const Login()), (route) => false);
 }
+
+updatestudentdetails(
+    String enroll,
+    String stdclass,
+    String address,
+    String phone,
+    String gender,
+    String dob,
+    String religion,
+    String category,
+    String caste,
+    String nationality,
+    BuildContext context) async {
+  // calling firestore
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+
+  StudentModel studentModel = StudentModel();
+  studentModel.uid = user!.uid;
+  studentModel.enroll = enroll;
+  studentModel.stdclass = stdclass;
+  studentModel.address = address;
+  studentModel.phone = phone;
+  studentModel.gender = gender;
+  studentModel.dob = dob;
+  studentModel.religion = religion;
+  studentModel.category = category;
+  studentModel.caste = caste;
+  studentModel.nationality = nationality;
+
+  await firebaseFirestore
+      .collection("students")
+      .doc(user.uid)
+      .update(studentModel.toMap());
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text('Details Updated Successfully '),
+    ),
+  );
+
+  Navigator.pushAndRemoveUntil((context),
+      MaterialPageRoute(builder: (context) => const Login()), (route) => false);
+}
