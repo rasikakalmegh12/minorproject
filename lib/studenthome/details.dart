@@ -360,9 +360,9 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                     controller: controller1,
                     decoration: InputDecoration(hintText: hint1),
                     enabled: !_status,
-                    onChanged: (value) {
+                    onSaved: (value) {
                       setState(() {
-                        controller1.text = value;
+                        controller1.text = value!;
                       });
                     },
                   ),
@@ -374,9 +374,9 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                   controller: controller2,
                   decoration: InputDecoration(hintText: hint2),
                   enabled: !_status,
-                  onChanged: (value) {
+                  onSaved: (value) {
                     setState(() {
-                      controller2.text = value;
+                      controller2.text = value!;
                     });
                   },
                 ),
@@ -420,9 +420,9 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                   decoration: InputDecoration(
                     hintText: hintText,
                   ),
-                  onChanged: (value) {
+                  onSaved: (value) {
                     setState(() {
-                      controller.text = value;
+                      controller.text = value!;
                     });
                   },
                   enabled: !_status,
