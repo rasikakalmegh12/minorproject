@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,7 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic>? data;
   final TextEditingController fullname = TextEditingController();
+  final TextEditingController email = TextEditingController();
   final TextEditingController enroll = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController address = TextEditingController();
@@ -55,6 +58,15 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
   var genderList = ['Male', 'Female', 'Others'];
   late String selectedScene = genderList.first;
   var nameDb;
+  var enrollDb;
+  var emailDb;
+  var phoneDb;
+  var addressDb;
+  var stdclassDb;
+  var religionDb;
+  var categoryDb;
+  var casteDb;
+  var nationalityDb;
 
   @override
   void initState() {
@@ -74,15 +86,51 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
       data = docSnapshot.data();
       setState(() {
         nameDb = data?['fullname'];
+        emailDb = data?['email'];
+        enrollDb = data?['enroll'];
+        phoneDb = data?['phone'];
+        addressDb = data?['address'];
+        stdclassDb = data?['stdclass'];
+        religionDb = data?['religion'];
+        categoryDb = data?['category'];
+        casteDb = data?['caste'];
+        nationalityDb = data?['nationality'];
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (nameDb != null) {
-      fullname.text = nameDb;
-    }
+    // if (nameDb != null) {
+    //   fullname.text = nameDb;
+    // }
+    // if (emailDb != null) {
+    //   email.text = emailDb;
+    // }
+    // if (enrollDb != null) {
+    //   enroll.text = enrollDb;
+    // }
+    // if (phoneDb != null) {
+    //   phone.text = phoneDb;
+    // }
+    // if (addressDb != null) {
+    //   address.text = addressDb;
+    // }
+    // if (stdclassDb != null) {
+    //   stdclass.text = stdclassDb;
+    // }
+    // if (religionDb != null) {
+    //   religion.text = religionDb;
+    // }
+    // if (categoryDb != null) {
+    //   category.text = categoryDb;
+    // }
+    // if (casteDb != null) {
+    //   caste.text = casteDb;
+    // }
+    // if (nationalityDb != null) {
+    //   nationality.text = nationalityDb;
+    // }
     return Scaffold(
       body: Center(
         // ignore: sized_box_for_whitespace, avoid_unnecessary_containers
@@ -142,8 +190,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           Expanded(
                               child: TextFormField(
                             controller: enroll,
-                            onSaved: (value) {
-                              enroll.text = value!;
+                            autofocus: true,
+                            onChanged: (value) {
+                              setState(() {
+                                enroll.text = value;
+                              });
                             },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
@@ -159,8 +210,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           Expanded(
                               child: TextFormField(
                             controller: stdclass,
-                            onSaved: (value) {
-                              stdclass.text = value!;
+                            autofocus: true,
+                            onChanged: (value) {
+                              setState(() {
+                                stdclass.text = value;
+                              });
                             },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
@@ -177,8 +231,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                       ),
                       TextFormField(
                         controller: address,
-                        onSaved: (value) {
-                          address.text = value!;
+                        autofocus: true,
+                        onChanged: (value) {
+                          setState(() {
+                            address.text = value;
+                          });
                         },
                         style: const TextStyle(color: Colors.blue),
                         decoration: InputDecoration(
@@ -195,8 +252,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         Expanded(
                             child: TextFormField(
                           controller: phone,
-                          onSaved: (value) {
-                            phone.text = value!;
+                          autofocus: true,
+                          onChanged: (value) {
+                            setState(() {
+                              phone.text = value;
+                            });
                           },
                           style: const TextStyle(color: Colors.blue),
                           decoration: InputDecoration(
@@ -265,6 +325,8 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                         height: 10.0,
                       ),
                       TextFormField(
+                        controller: email,
+                        autofocus: true,
                         style: const TextStyle(color: Colors.blue),
                         decoration: InputDecoration(
                           labelText: 'Email',
@@ -281,8 +343,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           Expanded(
                               child: TextFormField(
                             controller: religion,
-                            onSaved: (value) {
-                              religion.text = value!;
+                            autofocus: true,
+                            onChanged: (value) {
+                              setState(() {
+                                religion.text = value;
+                              });
                             },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
@@ -298,8 +363,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           Expanded(
                               child: TextFormField(
                             controller: category,
-                            onSaved: (value) {
-                              category.text = value!;
+                            autofocus: true,
+                            onChanged: (value) {
+                              setState(() {
+                                category.text = value;
+                              });
                             },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
@@ -319,8 +387,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           Expanded(
                               child: TextFormField(
                             controller: caste,
-                            onSaved: (value) {
-                              caste.text = value!;
+                            autofocus: true,
+                            onChanged: (value) {
+                              setState(() {
+                                caste.text = value;
+                              });
                             },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
@@ -336,8 +407,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                           Expanded(
                               child: TextFormField(
                             controller: nationality,
-                            onSaved: (value) {
-                              nationality.text = value!;
+                            autofocus: true,
+                            onChanged: (value) {
+                              setState(() {
+                                nationality.text = value;
+                              });
                             },
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(

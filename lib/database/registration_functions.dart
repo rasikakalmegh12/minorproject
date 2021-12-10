@@ -109,23 +109,31 @@ updatestudentdetails(
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
-  StudentModel studentModel = StudentModel();
-  studentModel.uid = user!.uid;
-  studentModel.enroll = enroll;
-  studentModel.stdclass = stdclass;
-  studentModel.address = address;
-  studentModel.phone = phone;
-  studentModel.gender = gender;
-  studentModel.dob = dob;
-  studentModel.religion = religion;
-  studentModel.category = category;
-  studentModel.caste = caste;
-  studentModel.nationality = nationality;
+  // StudentModel studentModel = StudentModel();
+  // studentModel.uid = user!.uid;
+  // studentModel.enroll = enroll;
+  // studentModel.stdclass = stdclass;
+  // studentModel.address = address;
+  // studentModel.phone = phone;
+  // studentModel.gender = gender;
+  // studentModel.dob = dob;
+  // studentModel.religion = religion;
+  // studentModel.category = category;
+  // studentModel.caste = caste;
+  // studentModel.nationality = nationality;
 
-  await firebaseFirestore
-      .collection("students")
-      .doc(user.uid)
-      .update(studentModel.toMap());
+  await firebaseFirestore.collection("students").doc(user!.uid).update({
+    'address': address,
+    'caste': caste,
+    'category': category,
+    'class': stdclass,
+    'dob': dob,
+    'enroll': enroll,
+    'gender': gender,
+    'nationality': nationality,
+    'phone': phone,
+    'religion': religion
+  });
 
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
