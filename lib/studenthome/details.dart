@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:schoolsys/database/registration_functions.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:intl/intl.dart';
@@ -41,11 +44,16 @@ class MyStudentDetailsForm extends StatefulWidget {
   }
 }
 
-class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
+class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
+    with SingleTickerProviderStateMixin {
+  bool _status = true;
+  final FocusNode myFocusNode = FocusNode();
+  late File imageFile;
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic>? data;
   final TextEditingController fullname = TextEditingController();
   final TextEditingController email = TextEditingController();
+  final TextEditingController gender = TextEditingController();
   final TextEditingController enroll = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController address = TextEditingController();
@@ -101,37 +109,444 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-    // if (nameDb != null) {
-    //   fullname.text = nameDb;
-    // }
-    // if (emailDb != null) {
-    //   email.text = emailDb;
-    // }
-    // if (enrollDb != null) {
-    //   enroll.text = enrollDb;
-    // }
-    // if (phoneDb != null) {
-    //   phone.text = phoneDb;
-    // }
-    // if (addressDb != null) {
-    //   address.text = addressDb;
-    // }
-    // if (stdclassDb != null) {
-    //   stdclass.text = stdclassDb;
-    // }
-    // if (religionDb != null) {
-    //   religion.text = religionDb;
-    // }
-    // if (categoryDb != null) {
-    //   category.text = categoryDb;
-    // }
-    // if (casteDb != null) {
-    //   caste.text = casteDb;
-    // }
-    // if (nationalityDb != null) {
-    //   nationality.text = nationalityDb;
-    // }
     return Scaffold(
+        body: Container(
+      color: Colors.white,
+      child: ListView(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              //Profile pic
+              Container(
+                height: 170.0,
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Stack(fit: StackFit.loose, children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                                width: 140.0,
+                                height: 140.0,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: ExactAssetImage('assets/user.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )),
+                          ],
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: 90.0, right: 100.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                radius: 25.0,
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    _getFromGallery();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                color: const Color(0xffFFFFFF),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 25.0, right: 25.0, top: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: const <Widget>[
+                                Text(
+                                  'Personal Information',
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                _status ? _getEditIcon() : Container(),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      longTextFormField("Name", "Enter Your Name", fullname),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      shortTextField(
+                          'Class',
+                          'Enrollment Number ',
+                          'Enter class',
+                          'Enter Enrollment number',
+                          stdclass,
+                          enroll),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 25.0, right: 25.0, top: 2.0),
+                        child: Expanded(
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                labelText: 'Gender',
+                                labelStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.black)),
+                            value: selectedScene,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            iconSize: 24,
+                            style: const TextStyle(color: Colors.blue),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedScene = newValue!;
+                              });
+                            },
+                            isExpanded: false,
+                            items: genderList
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      longTextFormField("Email", "Enter Email ID", email),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      shortTextField('Cast', 'Nationality', 'Enter Cast',
+                          'Enter Nationality', caste, nationality),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      longTextFormField("Mobile", "Enter Mobile Number", phone),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      shortTextField('Religion', 'Category', 'Enter Religion',
+                          'Enter Category', religion, category),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 25.0, right: 25.0, top: 2.0),
+                        child: TextFormField(
+                          controller: intialdateval,
+                          style: const TextStyle(color: Colors.blue),
+                          decoration: const InputDecoration(
+                            labelText: 'Date Of Birth',
+                            labelStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.black),
+                            suffixIcon: Icon(Icons.calendar_today),
+                          ),
+                          onTap: () {
+                            _selectDate();
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          maxLines: 1,
+                          validator: (value) {
+                            if (value!.isEmpty || value.isEmpty) {
+                              return 'Choose Date';
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      longTextFormField("Address", "Enter Address", address),
+                      !_status ? _getActionButtons() : Container(),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    ));
+  }
+
+  Padding shortTextField(
+      String title1,
+      String title2,
+      String hint1,
+      String hint2,
+      TextEditingController controller1,
+      TextEditingController controller2) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  title1,
+                  style: const TextStyle(
+                      fontSize: 16.0, fontWeight: FontWeight.bold),
+                ),
+                flex: 2,
+              ),
+              Expanded(
+                child: Text(
+                  title2,
+                  style: const TextStyle(
+                      fontSize: 16.0, fontWeight: FontWeight.bold),
+                ),
+                flex: 2,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: TextField(
+                    decoration: InputDecoration(hintText: hint1),
+                    enabled: !_status,
+                  ),
+                ),
+                flex: 2,
+              ),
+              Flexible(
+                child: TextField(
+                  decoration: InputDecoration(hintText: hint2),
+                  enabled: !_status,
+                ),
+                flex: 2,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding longTextFormField(
+      String title, String hintText, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Flexible(
+                child: TextFormField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    hintText: hintText,
+                  ),
+                  enabled: !_status,
+                  autofocus: !_status,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    myFocusNode.dispose();
+    super.dispose();
+  }
+
+  Widget _getActionButtons() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              // ignore: avoid_unnecessary_containers
+              child: Container(
+                  // ignore: deprecated_member_use
+                  child: RaisedButton(
+                child: const Text("Save"),
+                textColor: Colors.white,
+                color: Colors.blue,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    updatestudentdetails(
+                        enroll.text,
+                        stdclass.text,
+                        address.text,
+                        phone.text,
+                        selectedScene,
+                        intialdateval.text,
+                        religion.text,
+                        category.text,
+                        caste.text,
+                        nationality.text,
+                        context);
+                  }
+                  setState(() {
+                    _status = true;
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  });
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+              )),
+            ),
+            flex: 2,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              // ignore: avoid_unnecessary_containers
+              child: Container(
+                  // ignore: deprecated_member_use
+                  child: RaisedButton(
+                child: const Text("Cancel"),
+                textColor: Colors.white,
+                color: Colors.red,
+                onPressed: () {
+                  setState(() {
+                    _status = true;
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  });
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+              )),
+            ),
+            flex: 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getEditIcon() {
+    return GestureDetector(
+      child: const CircleAvatar(
+        backgroundColor: Colors.blue,
+        radius: 14.0,
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+          size: 16.0,
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _status = false;
+        });
+      },
+    );
+  }
+
+  _getFromGallery() async {
+    // ignore: deprecated_member_use
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1900, 8),
+        lastDate: DateTime(2022));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        intialdateval.text = DateFormat('dd-MM-yyyy').format(selectedDate);
+      });
+    }
+  }
+}
+
+
+/** 
+ *  Scaffold(
       body: Center(
         // ignore: sized_box_for_whitespace, avoid_unnecessary_containers
         child: Container(
@@ -459,19 +874,5 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
         ),
       ),
     );
-  }
-
-  DateTime selectedDate = DateTime.now();
-  Future<void> _selectDate() async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1900, 8),
-        lastDate: DateTime(2022));
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        intialdateval.text = DateFormat('dd-MM-yyyy').format(selectedDate);
-      });
-    }
-  }
-}
+ * 
+*/
