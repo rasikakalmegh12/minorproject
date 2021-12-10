@@ -57,18 +57,12 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
         ),
         ListTile(
-          leading: const Icon(Icons.home),
-          title: const Text('Home'),
-          onTap: () => {Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const StdHome()))
-                  }),
-        ListTile(
-            leading: const Icon(Icons.verified_user),
-            title: const Text('Edit Profile'),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()));
-            }),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const StdHome()))
+                }),
         ListTile(
             leading: const Icon(Icons.password),
             title: const Text('Change Password'),
