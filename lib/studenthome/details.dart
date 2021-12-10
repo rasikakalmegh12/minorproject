@@ -356,17 +356,29 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10.0),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: controller1,
                     decoration: InputDecoration(hintText: hint1),
                     enabled: !_status,
+                    onChanged: (value) {
+                      setState(() {
+                        controller1.text = value;
+                      });
+                    },
                   ),
                 ),
                 flex: 2,
               ),
               Flexible(
-                child: TextField(
+                child: TextFormField(
+                  controller: controller2,
                   decoration: InputDecoration(hintText: hint2),
                   enabled: !_status,
+                  onChanged: (value) {
+                    setState(() {
+                      controller2.text = value;
+                    });
+                  },
                 ),
                 flex: 2,
               ),
@@ -408,6 +420,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                   decoration: InputDecoration(
                     hintText: hintText,
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      controller.text = value;
+                    });
+                  },
                   enabled: !_status,
                   autofocus: !_status,
                 ),
