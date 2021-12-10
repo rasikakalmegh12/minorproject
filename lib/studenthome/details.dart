@@ -43,7 +43,18 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic>? data;
   final TextEditingController fullname = TextEditingController();
-  var name;
+  final TextEditingController enroll = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController address = TextEditingController();
+  final TextEditingController stdclass = TextEditingController();
+  final TextEditingController religion = TextEditingController();
+  final TextEditingController category = TextEditingController();
+  final TextEditingController caste = TextEditingController();
+  final TextEditingController nationality = TextEditingController();
+  final TextEditingController intialdateval = TextEditingController();
+  var genderList = ['Male', 'Female', 'Others'];
+  late String selectedScene = genderList.first;
+  var nameDb;
 
   @override
   void initState() {
@@ -57,36 +68,20 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
 
   Future<void> getDataFromFireStore() async {
     User? user = FirebaseAuth.instance.currentUser;
-    // final user = await FirebaseAuth.instance.currentUser;
     var collection = FirebaseFirestore.instance.collection('students');
     var docSnapshot = await collection.doc(user!.uid).get();
     if (docSnapshot.exists) {
       data = docSnapshot.data();
-      name = data?['fullname'];
-      //  print(name);
-      //  print(user.uid);
       setState(() {
-        name = data?['fullname'];
-        print(name);
+        nameDb = data?['fullname'];
       });
     }
   }
 
-  final TextEditingController enroll = TextEditingController();
-//final TextEditingController dob = TextEditingController();
-//final TextEditingController gender = TextEditingController();
-  final TextEditingController phone = TextEditingController();
-  final TextEditingController address = TextEditingController();
-  final TextEditingController stdclass = TextEditingController();
-  final TextEditingController religion = TextEditingController();
-  final TextEditingController category = TextEditingController();
-  final TextEditingController caste = TextEditingController();
-  final TextEditingController nationality = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    if (name != null) {
-      fullname.text = name;
+    if (nameDb != null) {
+      fullname.text = nameDb;
     }
     return Scaffold(
       body: Center(
@@ -352,14 +347,6 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                               ),
                             ),
                           )),
-                          Expanded(
-                            child: ElevatedButton(
-                              child: const Text('Save'),
-                              onPressed: () {
-                                getDataFromFireStore();
-                              },
-                            ),
-                          )
                         ],
                       ),
                       Padding(
@@ -378,8 +365,8 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
                                       stdclass.text,
                                       address.text,
                                       phone.text,
-                                      "",
-                                      "",
+                                      selectedScene,
+                                      intialdateval.text,
                                       religion.text,
                                       category.text,
                                       caste.text,
@@ -400,10 +387,6 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm> {
     );
   }
 
-  var genderList = ['Male', 'Female', 'Others'];
-  late String selectedScene = genderList.first;
-
-  final TextEditingController intialdateval = TextEditingController();
   DateTime selectedDate = DateTime.now();
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
