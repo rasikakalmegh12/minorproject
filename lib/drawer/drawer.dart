@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:schoolsys/drawer/contact.dart';
 import 'package:schoolsys/drawer/changepass.dart';
 import 'package:schoolsys/login.dart';
-import 'package:schoolsys/drawer/profile.dart';
-
 import 'package:schoolsys/studenthome/stdhome.dart';
-
 import 'package:schoolsys/preferences_functions.dart';
-
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

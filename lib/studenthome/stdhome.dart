@@ -5,7 +5,7 @@ import 'package:schoolsys/drawer/drawer.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:schoolsys/studenthome/attendance.dart';
 import 'package:schoolsys/studenthome/details.dart';
-import 'package:schoolsys/studenthome/exam.dart';
+import 'package:schoolsys/studenthome/std_noticeboard.dart';
 
 import 'package:schoolsys/studenthome/timetable.dart';
 
@@ -84,17 +84,17 @@ class StdHome extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ExamTT(),
+                      builder: (context) => const Notice_Student(),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        'assets/exam.png',
+                        'assets/noticeboard.png',
                         height: 120,
                         width: 120,
                       ),
-                      const Text('Exam')
+                      const Text('Notice Board')
                     ]),
               ),
             ),
