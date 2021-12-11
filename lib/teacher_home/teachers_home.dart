@@ -5,6 +5,7 @@ import 'package:schoolsys/login.dart';
 import 'package:schoolsys/teacher_home/TeacherAttendence.dart';
 import 'package:schoolsys/teacher_home/TeacherNoticeBoard.dart';
 import 'package:schoolsys/teacher_home/TeacherTimetable.dart';
+import 'package:schoolsys/teacher_home/t_noticeboard.dart';
 
 class TeacherHome extends StatefulWidget {
   const TeacherHome({Key? key}) : super(key: key);
@@ -97,15 +98,13 @@ class _TeacherHomeState extends State<TeacherHome> {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const TNoticeBoard(
-                        title: '',
-                      ),
+                      builder: (context) => const Notice_Teacher(),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
-                        'assets/timetable.png',
+                        'assets/noticeboard.png',
                         height: 120,
                         width: 120,
                       ),
