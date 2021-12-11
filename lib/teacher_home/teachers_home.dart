@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:schoolsys/login.dart';
 import 'package:schoolsys/teacher_home/TeacherAttendence.dart';
+import 'package:schoolsys/teacher_home/TeacherNoticeBoard.dart';
 import 'package:schoolsys/teacher_home/TeacherTimetable.dart';
 
 class TeacherHome extends StatefulWidget {
@@ -37,7 +38,6 @@ class _TeacherHomeState extends State<TeacherHome> {
           primary: false,
           crossAxisCount: 2,
           children: <Widget>[
-            
             Card(
               color: Colors.grey.shade200,
               elevation: 5,
@@ -63,7 +63,6 @@ class _TeacherHomeState extends State<TeacherHome> {
                     ]),
               ),
             ),
-            
             Card(
               color: Colors.grey.shade200,
               elevation: 5,
@@ -74,7 +73,8 @@ class _TeacherHomeState extends State<TeacherHome> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const TAttendance(
-                        title: '',),
+                        title: '',
+                      ),
                     )),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -85,6 +85,31 @@ class _TeacherHomeState extends State<TeacherHome> {
                         width: 120,
                       ),
                       const Text('Attendance'),
+                    ]),
+              ),
+            ),
+            Card(
+              color: Colors.grey.shade200,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TNoticeBoard(
+                        title: '',
+                      ),
+                    )),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/timetable.png',
+                        height: 120,
+                        width: 120,
+                      ),
+                      const Text('Notice Board')
                     ]),
               ),
             ),
