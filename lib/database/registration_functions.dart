@@ -30,15 +30,12 @@ postDetailsToFirestore(String name, BuildContext context) async {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
-  StudentModel studentModel = StudentModel();
-  studentModel.uid = user!.uid;
-  studentModel.email = user.email;
-  studentModel.fullname = name;
+  StudentModel std = StudentModel();
+  std.uid = user!.uid;
+  std.email = user.email;
+  std.fullname = name;
 
-  await firebaseFirestore
-      .collection("students")
-      .doc(user.uid)
-      .set(studentModel.toMap());
+  await firebaseFirestore.collection("students").doc(user.uid).set(std.toMap());
 
   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
     content: Text('Account Created succesfully'),
@@ -94,47 +91,54 @@ postTeacherDetailsToFirestore(String name, BuildContext context) async {
 }
 
 updatestudentdetails(
-    String enroll,
-    String stdclass,
-    String address,
-    String phone,
-    String gender,
-    String dob,
-    String religion,
-    String category,
-    String caste,
-    String nationality,
+    String? name,
+    String? stdclass,
+    String? enroll,
+    String? gender,
+    String? email,
+    String? caste,
+    String? nationality,
+    String? mobile,
+    String? religion,
+    String? category,
+    address,
+    dob,
     BuildContext context) async {
   // calling firestore
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
-  // StudentModel studentModel = StudentModel();
-  // studentModel.uid = user!.uid;
-  // studentModel.enroll = enroll;
-  // studentModel.stdclass = stdclass;
-  // studentModel.address = address;
-  // studentModel.phone = phone;
-  // studentModel.gender = gender;
-  // studentModel.dob = dob;
-  // studentModel.religion = religion;
-  // studentModel.category = category;
-  // studentModel.caste = caste;
-  // studentModel.nationality = nationality;
+  StudentModel std = StudentModel();
+  std.uid = user!.uid;
+  std.email = user.email;
+  std.fullname = name;
+  std.enroll = enroll;
+  std.stdclass = stdclass;
+  std.address = address;
+  std.phone = mobile;
+  std.gender = gender;
+  std.dob = dob;
+  std.religion = religion;
+  std.category = category;
+  std.caste = caste;
+  std.nationality = nationality;
 
-  await firebaseFirestore.collection("students").doc(user!.uid).update({
-    'address': address,
-    'caste': caste,
-    'category': category,
-    'class': stdclass,
-    'dob': dob,
-    'enroll': enroll,
-    'gender': gender,
-    'nationality': nationality,
-    'phone': phone,
-    'religion': religion
-  });
-
+  // await firebaseFirestore.collection("students").doc(user!.uid).update({
+  //   'address': address,
+  //   'caste': caste,
+  //   'category': category,
+  //   'class': stdclass,
+  //   'dob': dob,
+  //   'enroll': enroll,
+  //   'gender': gender,
+  //   'nationality': nationality,
+  //   'phone': phone,
+  //   'religion': religion
+  // });
+  await firebaseFirestore
+      .collection("students")
+      .doc(user.uid)
+      .update(std.toMap());
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
       content: Text('Details Updated Successfully '),

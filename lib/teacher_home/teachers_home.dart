@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:schoolsys/login.dart';
 import 'package:schoolsys/teacher_home/TeacherAttendence.dart';
+import 'package:schoolsys/teacher_home/TeacherNoticeBoard.dart';
 import 'package:schoolsys/teacher_home/TeacherTimetable.dart';
 import 'package:schoolsys/teacher_home/t_noticeboard.dart';
 

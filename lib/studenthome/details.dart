@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,8 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:schoolsys/database/registration_functions.dart';
+import 'package:schoolsys/database/student_model.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:intl/intl.dart';
+import 'package:schoolsys/registration/z_student.dart';
 
 class StdDetails extends StatelessWidget {
   const StdDetails({Key? key}) : super(key: key);
@@ -49,7 +52,6 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
   bool _status = true;
   final FocusNode myFocusNode = FocusNode();
   late File imageFile;
-  final _formKey = GlobalKey<FormState>();
   Map<String, dynamic>? data;
   final TextEditingController fullname = TextEditingController();
   final TextEditingController email = TextEditingController();
@@ -65,47 +67,57 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
   final TextEditingController intialdateval = TextEditingController();
   var genderList = ['Male', 'Female', 'Others'];
   late String selectedScene = genderList.first;
-  var nameDb;
-  var enrollDb;
-  var emailDb;
-  var phoneDb;
-  var addressDb;
-  var stdclassDb;
-  var religionDb;
-  var categoryDb;
-  var casteDb;
-  var nationalityDb;
 
+  // var nameDb;
+  // var enrollDb;
+  // var emailDb;
+  // var phoneDb;
+  // var addressDb;
+  // var stdclassDb;
+  // var religionDb;
+  // var categoryDb;
+  // var casteDb;
+  // var nationalityDb;
+  StudentModel studentModel = StudentModel();
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
-    getDataFromFireStore().then((results) {
-      SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-        setState(() {});
-      });
-    });
+    // getDataFromFireStore().then((results) {
+    //   SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+    //     setState(() {});
+    //   });
+    // });
     super.initState();
+    FirebaseFirestore.instance
+        .collection("students")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      studentModel = StudentModel.fromMap(value.data());
+      setState(() {});
+    });
   }
 
-  Future<void> getDataFromFireStore() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    var collection = FirebaseFirestore.instance.collection('students');
-    var docSnapshot = await collection.doc(user!.uid).get();
-    if (docSnapshot.exists) {
-      data = docSnapshot.data();
-      setState(() {
-        nameDb = data?['fullname'];
-        emailDb = data?['email'];
-        enrollDb = data?['enroll'];
-        phoneDb = data?['phone'];
-        addressDb = data?['address'];
-        stdclassDb = data?['stdclass'];
-        religionDb = data?['religion'];
-        categoryDb = data?['category'];
-        casteDb = data?['caste'];
-        nationalityDb = data?['nationality'];
-      });
-    }
-  }
+  // Future<void> getDataFromFireStore() async {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   var collection = FirebaseFirestore.instance.collection('students');
+  //   var docSnapshot = await collection.doc(user!.uid).get();
+  //   if (docSnapshot.exists) {
+  //     data = docSnapshot.data();
+  //     setState(() {
+  //       nameDb = data?['fullname'];
+  //       emailDb = data?['email'];
+  //       enrollDb = data?['enroll'];
+  //       phoneDb = data?['phone'];
+  //       addressDb = data?['address'];
+  //       stdclassDb = data?['stdclass'];
+  //       religionDb = data?['religion'];
+  //       categoryDb = data?['category'];
+  //       casteDb = data?['caste'];
+  //       nationalityDb = data?['nationality'];
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -208,15 +220,16 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                       const SizedBox(
                         height: 20,
                       ),
-                      longTextFormField("Name", "Enter Your Name", fullname),
+                      longTextFormField("Name",
+                          studentModel.fullname ?? "Your Name", fullname),
                       const SizedBox(
                         height: 20,
                       ),
                       shortTextField(
                           'Class',
                           'Enrollment Number ',
-                          'Enter class',
-                          'Enter Enrollment number',
+                          studentModel.stdclass ?? "Your Class",
+                          studentModel.enroll ?? "Enrollment number",
                           stdclass,
                           enroll),
                       const SizedBox(
@@ -256,21 +269,33 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                       const SizedBox(
                         height: 20,
                       ),
-                      longTextFormField("Email", "Enter Email ID", email),
+                      longTextFormField(
+                          "Email", studentModel.email ?? "Your Email", email),
                       const SizedBox(
                         height: 20,
                       ),
-                      shortTextField('Cast', 'Nationality', 'Enter Cast',
-                          'Enter Nationality', caste, nationality),
+                      shortTextField(
+                          'Cast',
+                          'Nationality',
+                          studentModel.caste ?? "Your caste",
+                          studentModel.nationality ?? 'Enter Nationality',
+                          caste,
+                          nationality),
                       const SizedBox(
                         height: 20,
                       ),
-                      longTextFormField("Mobile", "Enter Mobile Number", phone),
+                      longTextFormField("Mobile",
+                          studentModel.phone ?? "Enter Mobile Number", phone),
                       const SizedBox(
                         height: 20,
                       ),
-                      shortTextField('Religion', 'Category', 'Enter Religion',
-                          'Enter Category', religion, category),
+                      shortTextField(
+                          'Religion',
+                          'Category',
+                          studentModel.religion ?? 'Enter Religion',
+                          studentModel.category ?? 'Enter Category',
+                          religion,
+                          category),
                       const SizedBox(
                         height: 20.0,
                       ),
@@ -303,7 +328,11 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
                       const SizedBox(
                         height: 20,
                       ),
-                      longTextFormField("Address", "Enter Address", address),
+                      longTextFormField("Address",
+                          studentModel.address ?? "Enter Address", address),
+                      SizedBox(
+                        height: 20,
+                      ),
                       !_status ? _getActionButtons() : Container(),
                     ],
                   ),
@@ -444,72 +473,58 @@ class MyStudentDetailsFormState extends State<MyStudentDetailsForm>
   }
 
   Widget _getActionButtons() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              // ignore: avoid_unnecessary_containers
-              child: Container(
-                  // ignore: deprecated_member_use
-                  child: RaisedButton(
-                child: const Text("Save"),
-                textColor: Colors.white,
-                color: Colors.blue,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    updatestudentdetails(
-                        enroll.text,
-                        stdclass.text,
-                        address.text,
-                        phone.text,
-                        selectedScene,
-                        intialdateval.text,
-                        religion.text,
-                        category.text,
-                        caste.text,
-                        nationality.text,
-                        context);
-                  }
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  });
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-              )),
-            ),
-            flex: 2,
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        SizedBox(
+          width: 150,
+          child: FloatingActionButton(
+            child: const Text("Save"),
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blue,
+            onPressed: () async {
+              await updatestudentdetails(
+                  fullname.text,
+                  stdclass.text,
+                  enroll.text,
+                  selectedScene,
+                  email.text,
+                  caste.text,
+                  nationality.text,
+                  phone.text,
+                  religion.text,
+                  category.text,
+                  address.text,
+                  intialdateval.text,
+                  context);
+
+              setState(() {
+                _status = true;
+                FocusScope.of(context).requestFocus(FocusNode());
+              });
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0)),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              // ignore: avoid_unnecessary_containers
-              child: Container(
-                  // ignore: deprecated_member_use
-                  child: RaisedButton(
-                child: const Text("Cancel"),
-                textColor: Colors.white,
-                color: Colors.red,
-                onPressed: () {
-                  setState(() {
-                    _status = true;
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  });
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-              )),
-            ),
-            flex: 2,
+        ),
+        SizedBox(
+          width: 150,
+          child: FloatingActionButton(
+            child: const Text("Cancel"),
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            onPressed: () {
+              setState(() {
+                _status = true;
+                FocusScope.of(context).requestFocus(FocusNode());
+              });
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0)),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
