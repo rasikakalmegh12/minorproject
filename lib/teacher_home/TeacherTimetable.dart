@@ -58,6 +58,7 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
         setState(() {});
       });
     });
+
     super.initState();
   }
 
@@ -131,10 +132,21 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
                         style: const TextStyle(color: Colors.blue),
                         decoration: InputDecoration(
                           labelText: 'Date',
+                          suffixIcon: const Icon(Icons.calendar_today),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
+                        onTap: () {
+                          _selectDate();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        maxLines: 1,
+                        validator: (value) {
+                          if (value!.isEmpty || value.isEmpty) {
+                            return 'Choose Date';
+                          }
+                        },
                         onSaved: (value) {
                           date.text = value!;
                         },
@@ -149,11 +161,16 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
                             controller: start_time,
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
+                              suffixIcon: const Icon(Icons.calendar_today),
                               labelText: 'Start Time',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
+                            onTap: () {
+                              _selectStartTime();
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
                             onSaved: (value) {
                               start_time.text = value!;
                             },
@@ -167,10 +184,15 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
                             style: const TextStyle(color: Colors.blue),
                             decoration: InputDecoration(
                               labelText: 'End Time',
+                              suffixIcon: const Icon(Icons.calendar_today),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
+                            onTap: () {
+                              _selectEndTime();
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            },
                             onSaved: (value) {
                               end_time.text = value!;
                             },
@@ -263,14 +285,7 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
                                   child: const Text("Update"),
                                   textColor: Colors.white,
                                   color: Colors.red,
-                                  onPressed: () {
-                                    try {
-                                      databaseReference
-                                          .collection('teacher')
-                                          .doc('1')
-                                          .update({'Subject': subject.text});
-                                    } catch (e) {}
-                                  },
+                                  onPressed: () {},
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(20.0)),
@@ -290,6 +305,51 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
     );
   }
 
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1900, 8),
+        lastDate: DateTime(2022));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        date.text = DateFormat('dd/MM/yyyy').format(selectedDate);
+      });
+    }
+  }
+
+  TimeOfDay selectedTime = TimeOfDay.now();
+  Future<void> _selectStartTime() async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+    );
+    if (timeOfDay != null && timeOfDay != selectedTime) {
+      setState(() {
+        selectedTime = timeOfDay;
+        start_time.text = "${selectedTime.hour}:${selectedTime.minute}:00";
+        print("${selectedTime.hour}:${selectedTime.minute}:00");
+      });
+    }
+  }
+
+  Future<void> _selectEndTime() async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+    );
+    if (timeOfDay != null && timeOfDay != selectedTime) {
+      setState(() {
+        selectedTime = timeOfDay;
+        end_time.text = "${selectedTime.hour}:${selectedTime.minute}:00";
+        print("${selectedTime.hour}:${selectedTime.minute}:00");
+      });
+    }
+  }
+
   void _initializeEventColor() {
     _colorCollection.add(const Color(0xFF0F8644));
     _colorCollection.add(const Color(0xFF8B1FA9));
@@ -303,6 +363,8 @@ class LoadDataFromFireStoreState extends State<LoadDataFromFireStore> {
     _colorCollection.add(const Color(0xFF0A8043));
   }
 }
+
+mixin _timeController {}
 
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<Meeting> source) {
