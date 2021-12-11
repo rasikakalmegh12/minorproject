@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:schoolsys/drawer/contact.dart';
 import 'package:schoolsys/drawer/changepass.dart';
 import 'package:schoolsys/login.dart';
-import 'package:schoolsys/drawer/profile.dart';
-
 import 'package:schoolsys/studenthome/stdhome.dart';
-
 import 'package:schoolsys/preferences_functions.dart';
-
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,18 +53,12 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
         ),
         ListTile(
-          leading: const Icon(Icons.home),
-          title: const Text('Home'),
-          onTap: () => {Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const StdHome()))
-                  }),
-        ListTile(
-            leading: const Icon(Icons.verified_user),
-            title: const Text('Edit Profile'),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()));
-            }),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const StdHome()))
+                }),
         ListTile(
             leading: const Icon(Icons.password),
             title: const Text('Change Password'),
