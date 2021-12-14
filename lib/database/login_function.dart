@@ -16,6 +16,7 @@ void loginWithEmail(String email, String password, BuildContext context,
               )),
               if (loginType == 'Student')
                 {
+                  print(loginType),
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => StdHome()))
                 },

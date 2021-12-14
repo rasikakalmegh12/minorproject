@@ -177,6 +177,7 @@ class _Login extends State<Login> {
                                   ),
                                   color: Colors.blue.shade500,
                                   onPressed: () async {
+                                    print(selectedScene);
                                     if (formKey.currentState!.validate()) {
                                       if (selectedScene == 'Choose LoginType') {
                                         ScaffoldMessenger.of(context)
