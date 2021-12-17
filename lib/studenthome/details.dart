@@ -1,18 +1,15 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:schoolsys/database/registration_functions.dart';
 import 'package:schoolsys/database/student_model.dart';
 import 'package:schoolsys/drawer/drawer.dart';
 import 'package:intl/intl.dart';
-import 'package:schoolsys/registration/z_student.dart';
 
 class StdDetails extends StatelessWidget {
   const StdDetails({Key? key}) : super(key: key);

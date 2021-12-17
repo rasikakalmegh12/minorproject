@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:schoolsys/database/noticeboard_insertion.dart';
 import 'package:schoolsys/teacher_drawer/tdrawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class Notice_Teacher extends StatefulWidget {
+class Notice_Teacher extends StatelessWidget {
   const Notice_Teacher({Key? key}) : super(key: key);
 
   @override
-  _Notice_TeacherState createState() => _Notice_TeacherState();
+  Widget build(BuildContext context) {
+    const appTitle = 'Notice Board';
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: appTitle,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(appTitle),
+        ),
+        drawer: const MyDrawer1(),
+        body: const MyNoticeboard(),
+      ),
+    );
+  }
 }
 
-class _Notice_TeacherState extends State<Notice_Teacher> {
+//   @override
+//   _Notice_TeacherState createState() => _Notice_TeacherState();
+// }
+
+class MyNoticeboard extends StatefulWidget {
+  const MyNoticeboard({Key? key}) : super(key: key);
+
+  @override
+  MyNoticeboardState createState() => MyNoticeboardState();
+}
+
+class MyNoticeboardState extends State<MyNoticeboard> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController events = TextEditingController();
@@ -23,13 +51,18 @@ class _Notice_TeacherState extends State<Notice_Teacher> {
     super.initState();
   }
 
+  // Future<void> getDataFromFireStore() async {
+  //   var snapShotsValue = await databaseReference.collection("eventfield").get();
+
+  //   final Random random = new Random();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Notice Board')),
-      drawer: const MyDrawer1(),
       body: Container(
         color: Colors.white,
+        key: _formKey,
         child: ListView(children: <Widget>[
           Column(
             children: <Widget>[
@@ -136,7 +169,7 @@ class _Notice_TeacherState extends State<Notice_Teacher> {
                               style: TextStyle(
                                   fontSize: 18.0, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20.0,
                             ),
                             TextFormField(
@@ -180,7 +213,11 @@ class _Notice_TeacherState extends State<Notice_Teacher> {
                                         child: const Text("Add"),
                                         textColor: Colors.white,
                                         color: Colors.blue,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          print(events.text);
+                                          noticeboardInsertion(
+                                              events.text, context);
+                                        },
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20.0)),
